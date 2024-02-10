@@ -1,0 +1,94 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: UTF-8
+      string: amount=299&currency=CAD&metadata[purchase_id]=2&source=tok_visa_chargeDeclined&description=Charge+for+Ruby+Under+a+Microscope+%28Purchase+ID+2%29
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/10.3.0
+      Authorization:
+      - Bearer sk_test_51NcuGcIINoXgG6TndiodSg6TbaE7MSa6x9UzO3li1JJGI53t5WbjbD5crQ2Fur1ZKPUNZnCDdwWD9u80GF44sG7l00nJRNTPP0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_LC3Lg2T4fFvuc7","request_duration_ms":1001}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.3.0","lang":"ruby","lang_version":"3.2.2 p53 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 6.5.6-76060506-generic (jenkins@warp.pop-os.org) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #202310061235~1697396945~22.04~9283e32 SMP PREEMPT_DYNAMIC Sun O","hostname":"pop-os"}'
+      Idempotency-Key:
+      - 2023-12-17 08:21:19 -0500/2/2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 17 Dec 2023 13:21:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '366'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET,HEAD,PUT,PATCH,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - report-uri https://q.stripe.com/csp-report?p=v1%2Fcharges; block-all-mixed-content;
+        default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
+      Idempotency-Key:
+      - 2023-12-17 08:21:19 -0500/2/2
+      Original-Request:
+      - req_a6nyOLD4M7DdSu
+      Request-Id:
+      - req_a6nyOLD4M7DdSu
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - '2023-10-16'
+      Vary:
+      - Origin
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "charge": "ch_3OOKHTIINoXgG6Tn0NnmAcsv",
+            "code": "card_declined",
+            "decline_code": "generic_decline",
+            "doc_url": "https://stripe.com/docs/error-codes/card-declined",
+            "message": "Your card was declined.",
+            "request_log_url": "https://dashboard.stripe.com/test/logs/req_a6nyOLD4M7DdSu?t=1702819279",
+            "type": "card_error"
+          }
+        }
+  recorded_at: Sun, 17 Dec 2023 13:21:20 GMT
+recorded_with: VCR 6.2.0

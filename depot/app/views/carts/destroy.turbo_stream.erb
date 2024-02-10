@@ -1,0 +1,5 @@
+<%= turbo_stream.replace 'notice' do %>
+  <%= render partial: 'store/notice', locals: {notice: @notice} %>
+<% end %>
+
+<%= turbo_stream.remove(@cart) %>

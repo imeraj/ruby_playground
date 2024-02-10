@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Alexandria</title>
+</head>
+
+<body>
+  <div id="books"></div>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript">
+    $.ajax({
+        url: "http://localhost:3000/api/books",
+        headers: {
+          "Authorization": "Alexandria-Token api_key=1:195703a0d4867327e6dcff13f22d53b972b9b7bb8aa60bd3e9390ddb06f0262f"
+        },
+        success : function(response) {
+          console.log("Response", response);
+          $("#books").text(JSON.stringify(response));
+        }
+    })
+  </script>
+</body>
+</html>

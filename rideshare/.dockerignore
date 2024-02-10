@@ -1,0 +1,6 @@
+log/
+tmp/
+docker-compose.dev.yml
+docker-compose.test.yml
+docker-compose.yml
+README.md

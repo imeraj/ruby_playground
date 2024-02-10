@@ -1,0 +1,11 @@
+Dear <%= @order.name %>
+
+<h3>Pragmatic Order Shipped</h3>
+<p>
+  This is just to let you know that We have received the order <%= @order.id %>
+</p>
+
+<table>
+  <tr><th colspan="2">Qty</th><th>Description</th></tr>
+  <%= render @order.line_items -%>
+</table>
