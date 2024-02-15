@@ -3,6 +3,7 @@ require "erubis"
 require "rulers/version"
 require "rulers/routing"
 require "rack/request"
+require "rack/response"
 require "sqlite3"
 
 module Rulers
@@ -19,21 +20,15 @@ module Rulers
   class Application
     def call(env)
       if env['PATH_INFO'] == '/favicon.ico'
-        return [404, {'Content-Type' => 'text/html'}, []]
+        return [404, {'content-type' => 'text/html'}, []]
       end
 
       if env['PATH_INFO'] == '/'
-        [301, {'Content-Type' => 'text/html', 'Location' => '/quotes/a_quote'}, []] # Browser redirect
+        [301, {'content-type' => 'text/html', 'location' => '/quotes/a_quote'}, []] # Browser redirect
       else
         klass, act = Routing.get_controller_and_action(env)
-        controller = klass.new(env)
-        resp = controller.send(act)
-        if controller.get_response
-          st, hd, rs = controller.get_response.to_a
-          [st, hd, rs]
-        else
-          [200, {'Content-Type' => 'text/html'}, [resp]]
-        end
+        rack_app = klass.action(act)
+        rack_app.call(env)
       end
     end
   end
@@ -41,6 +36,22 @@ module Rulers
   class Controller
     def initialize(env)
       @env = env
+      @routing_params = {}
+    end
+
+    def dispatch(action, routing_params = {})
+      @routing_params = routing_params
+      text = self.send(action)
+      if get_response
+        st, hd, rs = get_response.to_a
+        [st, hd, rs]
+      else
+        [200, {'Content-Type' => 'text/html'}, [text]]
+      end
+    end
+
+    def self.action(act, routing_params = {})
+      proc { |e| self.new(e).dispatch(act, routing_params)}
     end
 
     def env
@@ -52,7 +63,7 @@ module Rulers
     end
 
     def params
-      request.params
+      request.params.merge(@routing_params)
     end
 
     def controller_name

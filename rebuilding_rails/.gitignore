@@ -2,4 +2,8 @@ rulers/rulers-0.1.0.gem
 
 best_quotes/db/quotes/
 
+best_quotes/test.db
+
+rulers/test.db
+
 .idea
