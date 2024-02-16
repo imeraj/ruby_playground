@@ -20,16 +20,21 @@ module Rulers
   class Application
     def call(env)
       if env['PATH_INFO'] == '/favicon.ico'
-        return [404, {'content-type' => 'text/html'}, []]
+        return [404, {'content-type' => 'text/html'}, ["Not Found"]]
       end
 
-      if env['PATH_INFO'] == '/'
-        [301, {'content-type' => 'text/html', 'location' => '/quotes/a_quote'}, []] # Browser redirect
-      else
-        klass, act = Routing.get_controller_and_action(env)
-        rack_app = klass.action(act)
-        rack_app.call(env)
-      end
+      rack_app = get_rack_app(env)
+      rack_app.call(env)
+    end
+
+    def route(&block)
+      @route_obj ||= RouteObject.new
+      @route_obj.instance_eval(&block)
+    end
+
+    def get_rack_app(env)
+      raise "No routes!" unless @route_obj
+      @route_obj.check_url(env["PATH_INFO"])
     end
   end
 
